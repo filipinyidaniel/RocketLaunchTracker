@@ -19,4 +19,4 @@ sudo: required
 before_install:
   - yes | sdkmanager "platforms;android-30"
 
-script: sudo chmod +x ./gradlew :app:build
+script: ./gradlew :app:build

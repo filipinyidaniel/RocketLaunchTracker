@@ -1,0 +1,46 @@
+package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import hu.bme.aut.android.rocketlaunchtracker.R
+import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
+import hu.bme.aut.android.rocketlaunchtracker.model.Launch
+import javax.inject.Inject
+
+class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
+
+    @Inject
+    lateinit var upcomingLaunchesPresenter: UpcomingLaunchesPresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_upcoming_launches)
+        (application as RocketLaunchTrackerApplication).injector.inject(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        upcomingLaunchesPresenter.attachScreen(this)
+    }
+
+    override fun onStop() {
+        upcomingLaunchesPresenter.detachScreen()
+        super.onStop()
+    }
+
+    override fun showLaunches(launches: List<Launch>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showErrorMessage(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun goToLaunchTrackingScreen(id: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun goToAboutScreen() {
+        TODO("Not yet implemented")
+    }
+}

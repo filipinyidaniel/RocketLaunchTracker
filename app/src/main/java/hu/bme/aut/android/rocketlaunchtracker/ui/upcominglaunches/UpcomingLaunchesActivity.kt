@@ -3,7 +3,7 @@ package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import hu.bme.aut.android.rocketlaunchtracker.R
-import hu.bme.aut.android.rocketlaunchtracker.models.Launch
+import hu.bme.aut.android.rocketlaunchtracker.model.Launch
 
 class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     override fun onCreate(savedInstanceState: Bundle?) {

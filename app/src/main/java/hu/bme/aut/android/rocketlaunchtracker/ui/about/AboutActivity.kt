@@ -20,7 +20,7 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
         super.onStop()
     }
 
-    override fun showAppInfo(name: String, version: String, developer: String) {
+    override fun showAppInfo(appVersion: String, copyright: String) {
         TODO("Not yet implemented")
     }
 

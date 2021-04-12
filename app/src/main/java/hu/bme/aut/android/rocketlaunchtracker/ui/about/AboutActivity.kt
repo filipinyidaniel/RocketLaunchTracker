@@ -19,4 +19,16 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
         AboutPresenter.detachScreen()
         super.onStop()
     }
+
+    override fun showAppInfo(name: String, version: String, developer: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun goToLaunchTrackingScreen() {
+        TODO("Not yet implemented")
+    }
+
+    override fun goToUpcomingLaunchesScreen() {
+        TODO("Not yet implemented")
+    }
 }

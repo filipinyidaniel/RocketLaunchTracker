@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.upcominglaunches.UpcomingLaunchesActivity" />
-        <activity android:name=".ui.about.AboutActivity"></activity>
+        <activity android:name=".ui.about.AboutActivity" />
     </application>
 
 </manifest>

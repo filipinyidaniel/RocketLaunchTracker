@@ -16,3 +16,5 @@ android:
 
 before_install:
   - yes | sdkmanager "platforms;android-30"
+
+script: ./gradlew :app:build

@@ -1,8 +1,8 @@
-package hu.bme.aut.android.rocketlaunchtracker.interactor.launchtracking
+package hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails
 
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 
-class LaunchTrackingInteractor {
+class LaunchDetailsInteractor {
     fun getLaunchDetails(id: String) : LaunchDetails {
         TODO("Not yet implemented")
     }

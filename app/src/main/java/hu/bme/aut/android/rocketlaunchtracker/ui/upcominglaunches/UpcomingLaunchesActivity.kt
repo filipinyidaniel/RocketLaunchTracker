@@ -3,21 +3,28 @@ package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import hu.bme.aut.android.rocketlaunchtracker.R
+import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.model.Launch
+import javax.inject.Inject
 
 class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
+
+    @Inject
+    lateinit var upcomingLaunchesPresenter: UpcomingLaunchesPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming_launches)
+        (application as RocketLaunchTrackerApplication).injector.inject(this)
     }
 
     override fun onStart() {
         super.onStart()
-        UpcomingLaunchesPresenter.attachScreen(this)
+        upcomingLaunchesPresenter.attachScreen(this)
     }
 
     override fun onStop() {
-        UpcomingLaunchesPresenter.detachScreen()
+        upcomingLaunchesPresenter.detachScreen()
         super.onStop()
     }
 

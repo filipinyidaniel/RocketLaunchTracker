@@ -1,5 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class LaunchSerializerCommon (
     val slug: String,
     val id: java.util.UUID? = null,
@@ -7,9 +9,9 @@ data class LaunchSerializerCommon (
     val launch_library_id: Int? = null,
     val name: String? = null,
     val status: LaunchStatus? = null,
-    val net: java.time.LocalDateTime? = null,
-    val window_end: java.time.LocalDateTime? = null,
-    val window_start: java.time.LocalDateTime? = null,
+    val net: Date? = null,
+    val window_end: Date? = null,
+    val window_start: Date? = null,
     val inhold: Boolean? = null,
     val tbdtime: Boolean? = null,
     val tbddate: Boolean? = null,

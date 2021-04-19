@@ -1,8 +1,10 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class SpaceStationSerializerForCommon (
     val name: String,
-    val founded: java.time.LocalDateTime,
+    val founded: Date,
     val description: String,
     val id: Int? = null,
     val url: String? = null,

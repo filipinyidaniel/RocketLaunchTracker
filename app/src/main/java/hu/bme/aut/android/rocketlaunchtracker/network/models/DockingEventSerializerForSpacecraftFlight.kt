@@ -1,9 +1,11 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class DockingEventSerializerForSpacecraftFlight (
-    val docking: java.time.LocalDateTime,
+    val docking: Date,
     val spacestation: SpaceStationSerializerForCommon? = null,
-    val departure: java.time.LocalDateTime? = null,
+    val departure: Date? = null,
     val docking_location: DockingLocation? = null
 ) {
 

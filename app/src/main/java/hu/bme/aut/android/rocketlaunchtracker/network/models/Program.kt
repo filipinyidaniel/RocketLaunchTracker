@@ -1,5 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class Program (
     val name: String,
     val id: Int? = null,
@@ -7,8 +9,8 @@ data class Program (
     val description: String? = null,
     val agencies: Array<AgencySerializerMini>? = null,
     val image_url: String? = null,
-    val start_date: java.time.LocalDateTime? = null,
-    val end_date: java.time.LocalDateTime? = null,
+    val start_date: Date? = null,
+    val end_date: Date? = null,
     val info_url: String? = null,
     val wiki_url: String? = null
 ) {

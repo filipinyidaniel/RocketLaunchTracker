@@ -1,5 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class LauncherConfigDetail (
     val name: String,
     val id: Int? = null,
@@ -16,7 +18,7 @@ data class LauncherConfigDetail (
     val max_stage: Int? = null,
     val length: java.math.BigDecimal? = null,
     val diameter: java.math.BigDecimal? = null,
-    val maiden_flight: java.time.LocalDateTime? = null,
+    val maiden_flight: Date? = null,
     val launch_mass: Int? = null,
     val leo_capacity: Int? = null,
     val gto_capacity: Int? = null,

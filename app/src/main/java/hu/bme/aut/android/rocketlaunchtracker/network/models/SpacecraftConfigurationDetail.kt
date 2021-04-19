@@ -1,5 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.network.models
 
+import java.util.*
+
 data class SpacecraftConfigurationDetail (
     val name: String,
     val id: Int? = null,
@@ -10,7 +12,7 @@ data class SpacecraftConfigurationDetail (
     val capability: String? = null,
     val history: String? = null,
     val details: String? = null,
-    val maiden_flight: java.time.LocalDateTime? = null,
+    val maiden_flight: Date? = null,
     val height: java.math.BigDecimal? = null,
     val diameter: java.math.BigDecimal? = null,
     val human_rated: Boolean? = null,

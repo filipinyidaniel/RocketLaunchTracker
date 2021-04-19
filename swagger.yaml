@@ -1,0 +1,1647 @@
+swagger: '2.0'
+info:
+  title: Launch Library
+  description: |-
+    The Launch Library API is a product by The Space Devs with an up-to-date database of Spaceflight events. 
+
+    While this API is free to use it is subject to rate limiting for non-authenticated requests.
+
+    Please use https://lldev.thespacedevs.com for development testing - this endpoint has stale data but is not subject to any rate limits.
+
+    If you are interested in a higher rate limit please consider supporting the project on Patreon for access to an API Key.
+  contact:
+    email: support@thespacedevs.com
+  license:
+    name: Apache License 2.0
+  version: v2.0.0
+host: ll.thespacedevs.com
+schemes:
+  - https
+basePath: /2.0.0
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Token:
+    in: header
+    name: Token
+    type: apiKey
+security:
+  - Token: []
+paths:
+  /launch/upcoming/:
+    get:
+      operationId: getUpcomingLaunches
+      description: API endpoint that returns future Launch objects and launches from the last twenty four hours.
+      parameters:
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/LaunchList'
+      tags:
+        - launch
+    parameters: []
+  '/launch/{id}/':
+    get:
+      operationId: getLaunch
+      summary: API endpoint that returns all Launch objects or a single launch.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/LaunchDetailed'
+      tags:
+        - launch
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+definitions:
+  Agency:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      featured:
+        title: Featured
+        type: boolean
+      type:
+        title: Type
+        type: string
+        maxLength: 255
+        x-nullable: true
+      country_code:
+        title: Country code
+        type: string
+        maxLength: 1048
+      abbrev:
+        title: Abbrev
+        type: string
+        maxLength: 255
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      administrator:
+        title: Administrator
+        type: string
+        maxLength: 200
+        x-nullable: true
+      founding_year:
+        title: Founding year
+        type: string
+        maxLength: 20
+        x-nullable: true
+      launchers:
+        title: Launchers
+        type: string
+        maxLength: 500
+      spacecraft:
+        title: Spacecraft
+        type: string
+        maxLength: 500
+      parent:
+        title: Parent
+        type: string
+        readOnly: true
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  SpacecraftConfigType:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  SpacecraftConfigurationDetail:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      type:
+        $ref: '#/definitions/SpacecraftConfigType'
+      agency:
+        $ref: '#/definitions/Agency'
+      in_use:
+        title: In use
+        type: boolean
+      capability:
+        title: Capability
+        type: string
+        maxLength: 2048
+        minLength: 1
+      history:
+        title: History
+        type: string
+        maxLength: 1000
+        minLength: 1
+      details:
+        title: Details
+        type: string
+        maxLength: 1000
+        minLength: 1
+      maiden_flight:
+        title: Maiden flight
+        type: string
+        format: date
+        x-nullable: true
+      height:
+        title: Length (m)
+        type: number
+        x-nullable: true
+      diameter:
+        title: Diameter (m)
+        type: number
+        x-nullable: true
+      human_rated:
+        title: Human rated
+        type: boolean
+      crew_capacity:
+        title: Crew Capacity
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      payload_capacity:
+        title: Payload Capacity (kg)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      flight_life:
+        title: Flight life
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      nation_url:
+        title: Nation url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      wiki_link:
+        title: Wiki link
+        type: string
+        format: uri
+        maxLength: 200
+      info_link:
+        title: Info link
+        type: string
+        format: uri
+        maxLength: 200
+  AstronautStatus:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  AstronautType:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  AgencySerializerMini:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      type:
+        title: Type
+        type: string
+        maxLength: 255
+        x-nullable: true
+  LaunchStatus:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        readOnly: true
+  LauncherConfigList:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      launch_library_id:
+        title: Launch library id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      family:
+        title: Family
+        type: string
+        maxLength: 200
+      full_name:
+        title: Full name
+        type: string
+        maxLength: 200
+      variant:
+        title: Variant
+        type: string
+        maxLength: 200
+  RocketSerializerCommon:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      configuration:
+        $ref: '#/definitions/LauncherConfigList'
+  Orbit:
+    required:
+      - name
+      - abbrev
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 50
+        minLength: 1
+      abbrev:
+        title: Abbrev
+        type: string
+        maxLength: 30
+        minLength: 1
+  Mission:
+    required:
+      - orbit
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      launch_library_id:
+        title: Launch library id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      description:
+        title: Description
+        type: string
+      launch_designator:
+        title: Launch designator
+        type: string
+        maxLength: 255
+        x-nullable: true
+      type:
+        title: Type
+        type: string
+        readOnly: true
+      orbit:
+        $ref: '#/definitions/Orbit'
+  Location:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      country_code:
+        title: Country code
+        type: string
+        maxLength: 255
+      map_image:
+        title: Map image
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      total_launch_count:
+        title: Total launch count
+        type: string
+        readOnly: true
+      total_landing_count:
+        title: Total landing count
+        type: string
+        readOnly: true
+  Pad:
+    required:
+      - location
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      agency_id:
+        title: Agency id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      info_url:
+        title: Info url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      wiki_url:
+        title: Wiki url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      map_url:
+        title: Map url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      latitude:
+        title: Latitude
+        type: string
+        maxLength: 30
+        x-nullable: true
+      longitude:
+        title: Longitude
+        type: string
+        maxLength: 30
+        x-nullable: true
+      location:
+        $ref: '#/definitions/Location'
+      map_image:
+        title: Map image
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      total_launch_count:
+        title: Total launch count
+        type: string
+        readOnly: true
+  Program:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 40000
+        x-nullable: true
+      agencies:
+        type: array
+        items:
+          $ref: '#/definitions/AgencySerializerMini'
+        readOnly: true
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        format: uri
+      start_date:
+        title: Start date
+        type: string
+        format: date-time
+        x-nullable: true
+      end_date:
+        title: End date
+        type: string
+        format: date-time
+        x-nullable: true
+      info_url:
+        title: Info url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      wiki_url:
+        title: Wiki url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+  LaunchSerializerCommon:
+    required:
+      - slug
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      launch_library_id:
+        title: Launch library id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: '^[-a-zA-Z0-9_]+$'
+        minLength: 1
+      name:
+        title: Name
+        type: string
+        maxLength: 2048
+      status:
+        $ref: '#/definitions/LaunchStatus'
+      net:
+        title: Net
+        type: string
+        format: date-time
+        x-nullable: true
+      window_end:
+        title: Window end
+        type: string
+        format: date-time
+        x-nullable: true
+      window_start:
+        title: Window start
+        type: string
+        format: date-time
+        x-nullable: true
+      inhold:
+        title: Inhold
+        type: boolean
+        x-nullable: true
+      tbdtime:
+        title: Tbdtime
+        type: boolean
+        x-nullable: true
+      tbddate:
+        title: Tbddate
+        type: boolean
+        x-nullable: true
+      probability:
+        title: Probability
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      holdreason:
+        title: Holdreason
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      failreason:
+        title: Failreason
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      hashtag:
+        title: Hashtag
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      launch_service_provider:
+        $ref: '#/definitions/AgencySerializerMini'
+      rocket:
+        $ref: '#/definitions/RocketSerializerCommon'
+      mission:
+        $ref: '#/definitions/Mission'
+      pad:
+        $ref: '#/definitions/Pad'
+      infoURLs:
+        title: Infourls
+        type: string
+        readOnly: true
+      vidURLs:
+        title: Vidurls
+        type: string
+        readOnly: true
+      webcast_live:
+        title: Webcast live
+        type: boolean
+      image:
+        title: Image
+        type: string
+        readOnly: true
+      infographic:
+        title: Infographic
+        type: string
+        readOnly: true
+      program:
+        type: array
+        items:
+          $ref: '#/definitions/Program'
+        readOnly: true
+  SpacecraftStatus:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  AgencySerializerDetailedCommon:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      featured:
+        title: Featured
+        type: boolean
+      type:
+        title: Type
+        type: string
+        maxLength: 255
+        x-nullable: true
+      country_code:
+        title: Country code
+        type: string
+        maxLength: 1048
+      abbrev:
+        title: Abbrev
+        type: string
+        maxLength: 255
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      administrator:
+        title: Administrator
+        type: string
+        maxLength: 200
+        x-nullable: true
+      founding_year:
+        title: Founding year
+        type: string
+        maxLength: 20
+        x-nullable: true
+      launchers:
+        title: Launchers
+        type: string
+        maxLength: 500
+      spacecraft:
+        title: Spacecraft
+        type: string
+        maxLength: 500
+      launch_library_url:
+        title: Launch library url
+        type: string
+        readOnly: true
+      total_launch_count:
+        title: Total launch count
+        type: string
+        readOnly: true
+      consecutive_successful_launches:
+        title: Consecutive successful launches
+        type: string
+        readOnly: true
+      successful_launches:
+        title: Successful launches
+        type: string
+        readOnly: true
+      failed_launches:
+        title: Failed launches
+        type: string
+        readOnly: true
+      pending_launches:
+        title: Pending launches
+        type: string
+        readOnly: true
+      consecutive_successful_landings:
+        title: Consecutive successful landings
+        type: string
+        readOnly: true
+      successful_landings:
+        title: Successful landings
+        type: string
+        readOnly: true
+      failed_landings:
+        title: Failed landings
+        type: string
+        readOnly: true
+      attempted_landings:
+        title: Attempted landings
+        type: string
+        readOnly: true
+      info_url:
+        title: Info url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      wiki_url:
+        title: Wiki url
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      logo_url:
+        title: Logo url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      nation_url:
+        title: Nation url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  LauncherConfigDetail:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      launch_library_id:
+        title: Launch library id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+      family:
+        title: Family
+        type: string
+        maxLength: 200
+      full_name:
+        title: Full name
+        type: string
+        maxLength: 200
+      manufacturer:
+        $ref: '#/definitions/AgencySerializerDetailedCommon'
+      program:
+        type: array
+        items:
+          $ref: '#/definitions/Program'
+        readOnly: true
+      variant:
+        title: Variant
+        type: string
+        maxLength: 200
+      alias:
+        title: Alias
+        type: string
+        maxLength: 200
+      min_stage:
+        title: Min stage
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      max_stage:
+        title: Max stage
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      length:
+        title: Length (m)
+        type: number
+        x-nullable: true
+      diameter:
+        title: Max Diameter (m)
+        type: number
+        x-nullable: true
+      maiden_flight:
+        title: Maiden Flight Date
+        type: string
+        format: date
+        x-nullable: true
+      launch_mass:
+        title: Mass at Launch (T)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      leo_capacity:
+        title: LEO Capacity (kg)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      gto_capacity:
+        title: GTO Capacity (kg)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      to_thrust:
+        title: Thrust at Liftoff (kN)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      apogee:
+        title: Apogee - Sub-Orbital Only (km)
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      vehicle_range:
+        title: Vehicle Range - Legacy
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      info_url:
+        title: Info url
+        type: string
+        maxLength: 200
+        x-nullable: true
+      wiki_url:
+        title: Wiki url
+        type: string
+        maxLength: 200
+        x-nullable: true
+      total_launch_count:
+        title: Total launch count
+        type: string
+        readOnly: true
+      consecutive_successful_launches:
+        title: Consecutive successful launches
+        type: string
+        readOnly: true
+      successful_launches:
+        title: Successful launches
+        type: string
+        readOnly: true
+      failed_launches:
+        title: Failed launches
+        type: string
+        readOnly: true
+      pending_launches:
+        title: Pending launches
+        type: string
+        readOnly: true
+  DockingLocation:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  SpacecraftDetailedNoFlights:
+    required:
+      - name
+      - description
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+      serial_number:
+        title: Serial number
+        type: string
+        maxLength: 255
+        x-nullable: true
+      status:
+        $ref: '#/definitions/SpacecraftStatus'
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        minLength: 1
+      spacecraft_config:
+        $ref: '#/definitions/SpacecraftConfigurationDetail'
+  SpaceStationStatus:
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+  SpaceStationSerializerForCommon:
+    required:
+      - name
+      - founded
+      - description
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+      status:
+        $ref: '#/definitions/SpaceStationStatus'
+      founded:
+        title: Founded
+        type: string
+        format: date
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        minLength: 1
+      orbit:
+        title: Orbit
+        type: string
+        readOnly: true
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  LauncherDetailed:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      details:
+        title: Details
+        type: string
+        maxLength: 2048
+      flight_proven:
+        title: Flight proven
+        type: boolean
+      serial_number:
+        title: Serial number
+        type: string
+        maxLength: 10
+        x-nullable: true
+      status:
+        title: Status
+        type: string
+        maxLength: 2048
+      image_url:
+        title: Image url
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      successful_landings:
+        title: Successful landings
+        type: string
+        readOnly: true
+      attempted_landings:
+        title: Attempted landings
+        type: string
+        readOnly: true
+      flights:
+        title: Flights
+        type: string
+        readOnly: true
+      last_launch_date:
+        title: Last launch date
+        type: string
+        readOnly: true
+      first_launch_date:
+        title: First launch date
+        type: string
+        readOnly: true
+  LandingLocation:
+    required:
+      - location
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      abbrev:
+        title: Abbrev
+        type: string
+        maxLength: 255
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      location:
+        $ref: '#/definitions/Location'
+      successful_landings:
+        title: Successful landings
+        type: string
+        readOnly: true
+  LandingType:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      abbrev:
+        title: Abbrev
+        type: string
+        maxLength: 255
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+        x-nullable: true
+  Landing:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      attempt:
+        title: Attempt
+        type: boolean
+        x-nullable: true
+      success:
+        title: Success
+        type: boolean
+        x-nullable: true
+      description:
+        title: Description
+        type: string
+        maxLength: 2048
+      location:
+        $ref: '#/definitions/LandingLocation'
+      type:
+        $ref: '#/definitions/LandingType'
+  LaunchSerializerMini:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 2048
+  FirstStage:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      type:
+        title: Type
+        type: string
+        readOnly: true
+      reused:
+        title: Reused
+        type: boolean
+        x-nullable: true
+      launcher_flight_number:
+        title: Launcher flight number
+        type: string
+        readOnly: true
+      launcher:
+        $ref: '#/definitions/LauncherDetailed'
+      landing:
+        $ref: '#/definitions/Landing'
+      previous_flight_date:
+        title: Previous flight date
+        type: string
+        readOnly: true
+      turn_around_time_days:
+        title: Turn around time days
+        type: string
+        readOnly: true
+      previous_flight:
+        $ref: '#/definitions/LaunchSerializerMini'
+  AstronautDetailedSerializerNoFlights:
+    required:
+      - name
+      - date_of_birth
+      - nationality
+      - bio
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+      type:
+        $ref: '#/definitions/AstronautType'
+      status:
+        $ref: '#/definitions/AstronautStatus'
+      agency:
+        $ref: '#/definitions/AgencySerializerMini'
+      date_of_birth:
+        title: Date of birth
+        type: string
+        format: date
+      date_of_death:
+        title: Date of death
+        type: string
+        format: date
+        x-nullable: true
+      nationality:
+        title: Nationality
+        type: string
+        maxLength: 255
+        minLength: 1
+      twitter:
+        title: Twitter
+        type: string
+        maxLength: 255
+        x-nullable: true
+      instagram:
+        title: Instagram
+        type: string
+        maxLength: 255
+        x-nullable: true
+      bio:
+        title: Bio
+        type: string
+        maxLength: 2048
+        minLength: 1
+      profile_image:
+        title: Profile image
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      wiki:
+        title: Wiki
+        type: string
+        maxLength: 255
+        x-nullable: true
+      last_flight:
+        title: Last flight
+        type: string
+        readOnly: true
+      first_flight:
+        title: First flight
+        type: string
+        readOnly: true
+  AstronautFlight:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      role:
+        title: Role
+        type: string
+        readOnly: true
+      astronaut:
+        $ref: '#/definitions/AstronautDetailedSerializerNoFlights'
+  DockingEventSerializerForSpacecraftFlight:
+    required:
+      - docking
+    type: object
+    properties:
+      spacestation:
+        $ref: '#/definitions/SpaceStationSerializerForCommon'
+      docking:
+        title: Docking
+        type: string
+        format: date-time
+      departure:
+        title: Departure
+        type: string
+        format: date-time
+        x-nullable: true
+      docking_location:
+        $ref: '#/definitions/DockingLocation'
+  SpacecraftFlightDetailedSerializerForLaunch:
+    required:
+      - id
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      mission_end:
+        title: Mission end
+        type: string
+        format: date-time
+        x-nullable: true
+      destination:
+        title: Destination
+        type: string
+        maxLength: 255
+        x-nullable: true
+      launch_crew:
+        type: array
+        items:
+          $ref: '#/definitions/AstronautFlight'
+        readOnly: true
+      onboard_crew:
+        type: array
+        items:
+          $ref: '#/definitions/AstronautFlight'
+        readOnly: true
+      landing_crew:
+        type: array
+        items:
+          $ref: '#/definitions/AstronautFlight'
+        readOnly: true
+      spacecraft:
+        $ref: '#/definitions/SpacecraftDetailedNoFlights'
+      docking_events:
+        type: array
+        items:
+          $ref: '#/definitions/DockingEventSerializerForSpacecraftFlight'
+        readOnly: true
+  RocketDetailed:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      configuration:
+        $ref: '#/definitions/LauncherConfigDetail'
+      launcher_stage:
+        type: array
+        items:
+          $ref: '#/definitions/FirstStage'
+        readOnly: true
+      spacecraft_stage:
+        $ref: '#/definitions/SpacecraftFlightDetailedSerializerForLaunch'
+  InfoURL:
+    required:
+      - url
+    type: object
+    properties:
+      priority:
+        title: Priority
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      title:
+        title: Title
+        type: string
+        maxLength: 200
+        x-nullable: true
+      description:
+        title: Description
+        type: string
+        maxLength: 350
+        x-nullable: true
+      feature_image:
+        title: Feature image
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        minLength: 1
+  VidURL:
+    required:
+      - url
+    type: object
+    properties:
+      priority:
+        title: Priority
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      title:
+        title: Title
+        type: string
+        maxLength: 200
+        x-nullable: true
+      description:
+        title: Description
+        type: string
+        maxLength: 350
+        x-nullable: true
+      feature_image:
+        title: Feature image
+        type: string
+        format: uri
+        maxLength: 200
+        x-nullable: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        minLength: 1
+  LaunchDetailed:
+    required:
+      - slug
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        format: uri
+        readOnly: true
+      launch_library_id:
+        title: Launch library id
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: '^[-a-zA-Z0-9_]+$'
+        minLength: 1
+      name:
+        title: Name
+        type: string
+        maxLength: 2048
+      status:
+        $ref: '#/definitions/LaunchStatus'
+      net:
+        title: Net
+        type: string
+        format: date-time
+        x-nullable: true
+      window_end:
+        title: Window end
+        type: string
+        format: date-time
+        x-nullable: true
+      window_start:
+        title: Window start
+        type: string
+        format: date-time
+        x-nullable: true
+      inhold:
+        title: Inhold
+        type: boolean
+        x-nullable: true
+      tbdtime:
+        title: Tbdtime
+        type: boolean
+        x-nullable: true
+      tbddate:
+        title: Tbddate
+        type: boolean
+        x-nullable: true
+      probability:
+        title: Probability
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      holdreason:
+        title: Holdreason
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      failreason:
+        title: Failreason
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      hashtag:
+        title: Hashtag
+        type: string
+        maxLength: 2048
+        x-nullable: true
+      launch_service_provider:
+        $ref: '#/definitions/AgencySerializerDetailedCommon'
+      rocket:
+        $ref: '#/definitions/RocketDetailed'
+      mission:
+        $ref: '#/definitions/Mission'
+      pad:
+        $ref: '#/definitions/Pad'
+      infoURLs:
+        type: array
+        items:
+          $ref: '#/definitions/InfoURL'
+        readOnly: true
+      vidURLs:
+        type: array
+        items:
+          $ref: '#/definitions/VidURL'
+        readOnly: true
+      webcast_live:
+        title: Webcast live
+        type: boolean
+      image:
+        title: Image
+        type: string
+        readOnly: true
+      infographic:
+        title: Infographic
+        type: string
+        readOnly: true
+      program:
+        type: array
+        items:
+          $ref: '#/definitions/Program'
+        readOnly: true
+      orbital_launch_attempt_count:
+        title: Orbital launch attempt count
+        type: string
+        readOnly: true
+      location_launch_attempt_count:
+        title: Location launch attempt count
+        type: string
+        readOnly: true
+      pad_launch_attempt_count:
+        title: Pad launch attempt count
+        type: string
+        readOnly: true
+      agency_launch_attempt_count:
+        title: Agency launch attempt count
+        type: string
+        readOnly: true
+      orbital_launch_attempt_count_year:
+        title: Orbital launch attempt count year
+        type: string
+        readOnly: true
+      location_launch_attempt_count_year:
+        title: Location launch attempt count year
+        type: string
+        readOnly: true
+      pad_launch_attempt_count_year:
+        title: Pad launch attempt count year
+        type: string
+        readOnly: true
+      agency_launch_attempt_count_year:
+        title: Agency launch attempt count year
+        type: string
+        readOnly: true
+  LaunchList:
+    required:
+      - count
+      - results
+    type: object
+    properties:
+      count:
+        type: integer
+      next:
+        type: string
+        format: uri
+        x-nullable: true
+      previous:
+        type: string
+        format: uri
+        x-nullable: true
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/LaunchSerializerCommon'

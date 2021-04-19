@@ -9,6 +9,8 @@ import hu.bme.aut.android.rocketlaunchtracker.interactor.launches.LaunchesIntera
 import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutPresenter
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingPresenter
 import hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches.UpcomingLaunchesPresenter
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -19,13 +21,25 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun aboutPresenter(aboutInteractor: AboutInteractor) = AboutPresenter(aboutInteractor)
+    fun networkExecutor(): Executor = Executors.newFixedThreadPool(1)
 
     @Provides
     @Singleton
-    fun launchTrackingPresenter(launchDetailsInteractor: LaunchDetailsInteractor) = LaunchTrackingPresenter(launchDetailsInteractor)
+    fun aboutPresenter(
+        aboutInteractor: AboutInteractor
+    ) = AboutPresenter(aboutInteractor)
 
     @Provides
     @Singleton
-    fun upcomingLaunchesPresenter(launchesInteractor: LaunchesInteractor) = UpcomingLaunchesPresenter(launchesInteractor)
+    fun launchTrackingPresenter(
+        executor: Executor,
+        launchDetailsInteractor: LaunchDetailsInteractor
+    ) = LaunchTrackingPresenter(executor, launchDetailsInteractor)
+
+    @Provides
+    @Singleton
+    fun upcomingLaunchesPresenter(
+        executor: Executor,
+        launchesInteractor: LaunchesInteractor
+    ) = UpcomingLaunchesPresenter(executor, launchesInteractor)
 }

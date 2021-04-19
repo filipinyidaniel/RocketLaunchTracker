@@ -28,6 +28,11 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
         super.onStop()
     }
 
+    override fun onResume() {
+        super.onResume()
+        launchTrackingPresenter.loadLaunchDetails("73ae8553-cc90-46e9-9a01-70a712493856")
+    }
+
     override fun showLaunchDetails(details: LaunchDetails) {
         TODO("Not yet implemented")
     }

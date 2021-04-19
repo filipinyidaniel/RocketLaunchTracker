@@ -28,6 +28,11 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         super.onStop()
     }
 
+    override fun onResume() {
+        super.onResume()
+        upcomingLaunchesPresenter.loadUpcomingLaunches()
+    }
+
     override fun showLaunches(launches: List<Launch>) {
         TODO("Not yet implemented")
     }

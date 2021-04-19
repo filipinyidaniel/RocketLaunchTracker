@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.bme.aut.android.rocketlaunchtracker">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication"
         android:allowBackup="true"

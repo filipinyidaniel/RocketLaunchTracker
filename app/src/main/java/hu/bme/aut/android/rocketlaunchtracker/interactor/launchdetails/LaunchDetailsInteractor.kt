@@ -1,11 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails
 
-import com.google.gson.GsonBuilder
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.network.apis.LaunchApi
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 
@@ -19,7 +15,7 @@ class LaunchDetailsInteractor @Inject constructor(private var launchApi: LaunchA
         }
         var body = response.body()
 
-        return LaunchDetails(id)
+        TODO("Not yet implemented")
     }
 
     fun getFollowedLaunchId() : String? {

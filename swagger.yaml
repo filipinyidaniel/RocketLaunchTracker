@@ -30,246 +30,14 @@ securityDefinitions:
 security:
   - Token: []
 paths:
-  /launch/:
-    get:
-      operationId: launch_list
-      summary: API endpoint that returns all Launch objects or a single launch.
-      description: EXAMPLE - /launch/<id>/ or /launch/?mode=list&search=SpaceX
-      parameters:
-        - name: name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: slug
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__id
-          in: query
-          description: ''
-          required: false
-          type: number
-        - name: status
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: launch_library_id
-          in: query
-          description: ''
-          required: false
-          type: number
-        - name: rocket__spacecraftflight__spacecraft__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__spacecraftflight__spacecraft__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__spacecraftflight__spacecraft__id
-          in: query
-          description: ''
-          required: false
-          type: number
-        - name: rocket__configuration__manufacturer__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__manufacturer__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__full_name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__full_name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: mission__orbit__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: mission__orbit__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: net__gt
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: net__lt
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: net__gte
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: net__lte
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: search
-          in: query
-          description: A search term.
-          required: false
-          type: string
-        - name: ordering
-          in: query
-          description: Which field to use when ordering the results.
-          required: false
-          type: string
-        - name: limit
-          in: query
-          description: Number of results to return per page.
-          required: false
-          type: integer
-        - name: offset
-          in: query
-          description: The initial index from which to return the results.
-          required: false
-          type: integer
-      responses:
-        '200':
-          description: ''
-          schema:
-            required:
-              - count
-              - results
-            type: object
-            properties:
-              count:
-                type: integer
-              next:
-                type: string
-                format: uri
-                x-nullable: true
-              previous:
-                type: string
-                format: uri
-                x-nullable: true
-              results:
-                type: array
-                items:
-                  $ref: '#/definitions/LaunchSerializerCommon'
-      tags:
-        - launch
-    parameters: []
   /launch/upcoming/:
     get:
-      operationId: launch_upcoming_list
+      operationId: getUpcomingLaunches
       description: API endpoint that returns future Launch objects and launches from the last twenty four hours.
       parameters:
-        - name: name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: slug
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__id
-          in: query
-          description: ''
-          required: false
-          type: number
         - name: status
           in: query
           description: ''
-          required: false
-          type: string
-        - name: launch_library_id
-          in: query
-          description: ''
-          required: false
-          type: number
-        - name: rocket__spacecraftflight__spacecraft__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__spacecraftflight__spacecraft__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__spacecraftflight__spacecraft__id
-          in: query
-          description: ''
-          required: false
-          type: number
-        - name: rocket__configuration__manufacturer__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__manufacturer__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__full_name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: rocket__configuration__full_name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: mission__orbit__name
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: mission__orbit__name__icontains
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: program
-          in: query
-          description: ''
-          required: false
-          type: string
-        - name: search
-          in: query
-          description: A search term.
-          required: false
-          type: string
-        - name: ordering
-          in: query
-          description: Which field to use when ordering the results.
           required: false
           type: string
         - name: limit
@@ -286,50 +54,14 @@ paths:
         '200':
           description: ''
           schema:
-            required:
-              - count
-              - results
-            type: object
-            properties:
-              count:
-                type: integer
-              next:
-                type: string
-                format: uri
-                x-nullable: true
-              previous:
-                type: string
-                format: uri
-                x-nullable: true
-              results:
-                type: array
-                items:
-                  $ref: '#/definitions/LaunchSerializerCommon'
+            $ref: '#/definitions/LaunchList'
       tags:
         - launch
     parameters: []
-  '/launch/upcoming/{id}/':
-    get:
-      operationId: launch_upcoming_read
-      description: API endpoint that returns future Launch objects and launches from the last twenty four hours.
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/LaunchDetailed'
-      tags:
-        - launch
-    parameters:
-      - name: id
-        in: path
-        required: true
-        type: string
   '/launch/{id}/':
     get:
-      operationId: launch_read
+      operationId: getLaunch
       summary: API endpoint that returns all Launch objects or a single launch.
-      description: EXAMPLE - /launch/<id>/ or /launch/?mode=list&search=SpaceX
       parameters: []
       responses:
         '200':
@@ -1893,3 +1625,23 @@ definitions:
         title: Agency launch attempt count year
         type: string
         readOnly: true
+  LaunchList:
+    required:
+      - count
+      - results
+    type: object
+    properties:
+      count:
+        type: integer
+      next:
+        type: string
+        format: uri
+        x-nullable: true
+      previous:
+        type: string
+        format: uri
+        x-nullable: true
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/LaunchSerializerCommon'

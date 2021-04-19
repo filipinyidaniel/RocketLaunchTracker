@@ -2,14 +2,20 @@ package hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking
 
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
 import hu.bme.aut.android.rocketlaunchtracker.ui.Presenter
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 class LaunchTrackingPresenter @Inject constructor(
+    private val executor: Executor,
     private val launchDetailsInteractor: LaunchDetailsInteractor
 ) : Presenter<LaunchTrackingScreen?>() {
 
     fun loadLaunchDetails(id: String?) {
-        TODO("Not yet implemented")
+        executor.execute {
+            if (id != null) {
+                launchDetailsInteractor.getLaunchDetails(id)
+            }
+        }
     }
 
     fun followLaunch() {

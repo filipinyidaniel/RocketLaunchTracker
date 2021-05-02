@@ -35,10 +35,10 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     fun openUpcomingLaunches() {
-        TODO("Not yet implemented")
+        screen?.goToUpcomingLaunchesScreen()
     }
 
     fun openAbout() {
-        TODO("Not yet implemented")
+        screen?.goToAboutScreen()
     }
 }

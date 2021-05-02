@@ -1,10 +1,16 @@
 package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import hu.bme.aut.android.rocketlaunchtracker.R
 import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.model.Launch
+import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutActivity
+import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingActivity
+import kotlinx.android.synthetic.main.activity_launch_tracking.*
 import javax.inject.Inject
 
 class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
@@ -15,7 +21,37 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming_launches)
+        setupNavigationMenu()
         (application as RocketLaunchTrackerApplication).injector.inject(this)
+    }
+
+    private fun setupNavigationMenu() {
+        val toggle = ActionBarDrawerToggle(
+            this,
+            navigationDrawer,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        navigationDrawer.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navigationView.setNavigationItemSelectedListener { item ->
+            navigationDrawer.closeDrawer(GravityCompat.START)
+            when (item.itemId) {
+                R.id.launch_tracking -> {
+                    upcomingLaunchesPresenter.openLaunchTracking()
+                    true
+                }
+                R.id.about -> {
+                    upcomingLaunchesPresenter.openAbout()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -30,7 +66,15 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
 
     override fun onResume() {
         super.onResume()
-        upcomingLaunchesPresenter.loadUpcomingLaunches()
+        navigationView.setCheckedItem(R.id.upcoming_launches)
+    }
+
+    override fun onBackPressed() {
+        if (navigationDrawer.isDrawerOpen(GravityCompat.START)) {
+            navigationDrawer.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun showLaunches(launches: List<Launch>) {
@@ -42,10 +86,17 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun goToLaunchTrackingScreen(id: String?) {
-        TODO("Not yet implemented")
+        val intent = Intent(this, LaunchTrackingActivity::class.java)
+        if (id != null) {
+            intent.putExtra(LaunchTrackingActivity.KEY_LAUNCH_ID, id)
+        } else {
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
     }
 
     override fun goToAboutScreen() {
-        TODO("Not yet implemented")
+        val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
     }
 }

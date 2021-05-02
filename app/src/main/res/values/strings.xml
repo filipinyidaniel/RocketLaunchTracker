@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Rocket Launch Tracker</string>
+    <string name="title_launch_tracking">Launch Tracking</string>
+    <string name="title_upcoming_launches">Upcoming Launches</string>
+    <string name="title_about">About</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
 </resources>

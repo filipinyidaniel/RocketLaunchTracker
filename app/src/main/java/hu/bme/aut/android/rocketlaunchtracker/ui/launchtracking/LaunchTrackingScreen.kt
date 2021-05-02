@@ -15,7 +15,7 @@ interface LaunchTrackingScreen {
     fun showNoTracking()
     fun showInfoMessage(message: String)
     fun showErrorMessage(message: String)
-    fun goToURL(url: String)
-    fun goToUpcomingLaunchesScreen()
-    fun goToAboutScreen()
+    fun openURL(url: String)
+    fun openUpcomingLaunchesScreen()
+    fun openAboutScreen()
 }

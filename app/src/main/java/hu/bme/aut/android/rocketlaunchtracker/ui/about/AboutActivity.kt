@@ -35,15 +35,16 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
         navigationDrawer.addDrawerListener(toggle)
         toggle.syncState()
 
+        navigationView.setCheckedItem(R.id.about)
         navigationView.setNavigationItemSelectedListener { item ->
             navigationDrawer.closeDrawer(GravityCompat.START)
             when (item.itemId) {
                 R.id.launch_tracking -> {
-                    aboutPresenter.openLaunchTracking()
+                    aboutPresenter.onLaunchTrackingClicked()
                     true
                 }
                 R.id.upcoming_launches -> {
-                    aboutPresenter.openUpcomingLaunches()
+                    aboutPresenter.onUpcomingLaunchesClicked()
                     true
                 }
                 else -> {
@@ -66,6 +67,7 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
     override fun onResume() {
         super.onResume()
         navigationView.setCheckedItem(R.id.about)
+        aboutPresenter.onLoad()
     }
 
     override fun onBackPressed() {
@@ -80,13 +82,13 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
         TODO("Not yet implemented")
     }
 
-    override fun goToLaunchTrackingScreen() {
+    override fun openLaunchTrackingScreen() {
         val intent = Intent(this, LaunchTrackingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 
-    override fun goToUpcomingLaunchesScreen() {
+    override fun openUpcomingLaunchesScreen() {
         val intent = Intent(this, UpcomingLaunchesActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

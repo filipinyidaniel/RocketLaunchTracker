@@ -10,21 +10,21 @@ class UpcomingLaunchesPresenter @Inject constructor(
     private val launchesInteractor: LaunchesInteractor
 ) : Presenter<UpcomingLaunchesScreen?>() {
 
-    fun loadUpcomingLaunches() {
+    fun onLoad() {
         executor.execute {
-            launchesInteractor.getUpcomingLaunches()
+            //launchesInteractor.getUpcomingLaunches()
         }
     }
 
-    fun openLaunchDetails(id: String) {
-        screen?.goToLaunchTrackingScreen(id)
+    fun onLaunchSelected(id: String) {
+        screen?.openLaunchTrackingScreen(id)
     }
 
-    fun openLaunchTracking() {
-        screen?.goToLaunchTrackingScreen(null)
+    fun onLaunchTrackingClicked() {
+        screen?.openLaunchTrackingScreen(null)
     }
 
-    fun openAbout() {
-        screen?.goToAboutScreen()
+    fun onAboutClicked() {
+        screen?.openAboutScreen()
     }
 }

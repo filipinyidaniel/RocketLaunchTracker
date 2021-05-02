@@ -8,15 +8,14 @@ class AboutPresenter @Inject constructor(
     private val aboutInteractor: AboutInteractor
 ) : Presenter<AboutScreen?>() {
 
-    fun loadAppInfo() {
-        TODO("Not yet implemented")
+    fun onLoad() {
     }
 
-    fun openLaunchTracking() {
-        screen?.goToLaunchTrackingScreen()
+    fun onLaunchTrackingClicked() {
+        screen?.openLaunchTrackingScreen()
     }
 
-    fun openUpcomingLaunches() {
-        screen?.goToUpcomingLaunchesScreen()
+    fun onUpcomingLaunchesClicked() {
+        screen?.openUpcomingLaunchesScreen()
     }
 }

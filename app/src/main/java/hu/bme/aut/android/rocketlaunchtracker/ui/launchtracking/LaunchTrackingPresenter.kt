@@ -10,7 +10,7 @@ class LaunchTrackingPresenter @Inject constructor(
     private val launchDetailsInteractor: LaunchDetailsInteractor
 ) : Presenter<LaunchTrackingScreen?>() {
 
-    fun loadLaunchDetails(id: String?) {
+    fun onLoad(id: String?) {
         executor.execute {
             if (id != null) {
                 //launchDetailsInteractor.getLaunchDetails(id)
@@ -18,27 +18,27 @@ class LaunchTrackingPresenter @Inject constructor(
         }
     }
 
-    fun followLaunch() {
+    fun onFollowClicked() {
         TODO("Not yet implemented")
     }
 
-    fun unfollowLaunch() {
+    fun onUnfollowClicked() {
         TODO("Not yet implemented")
     }
 
-    fun openWebsite() {
+    fun onWebsiteClicked() {
         TODO("Not yet implemented")
     }
 
-    fun openVideo() {
+    fun onVideoClicked() {
         TODO("Not yet implemented")
     }
 
-    fun openUpcomingLaunches() {
-        screen?.goToUpcomingLaunchesScreen()
+    fun onUpcomingLaunchesClicked() {
+        screen?.openUpcomingLaunchesScreen()
     }
 
-    fun openAbout() {
-        screen?.goToAboutScreen()
+    fun onAboutClicked() {
+        screen?.openAboutScreen()
     }
 }

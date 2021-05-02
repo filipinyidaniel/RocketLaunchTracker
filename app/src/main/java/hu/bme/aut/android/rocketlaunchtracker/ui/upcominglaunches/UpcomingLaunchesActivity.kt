@@ -36,15 +36,16 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         navigationDrawer.addDrawerListener(toggle)
         toggle.syncState()
 
+        navigationView.setCheckedItem(R.id.upcoming_launches)
         navigationView.setNavigationItemSelectedListener { item ->
             navigationDrawer.closeDrawer(GravityCompat.START)
             when (item.itemId) {
                 R.id.launch_tracking -> {
-                    upcomingLaunchesPresenter.openLaunchTracking()
+                    upcomingLaunchesPresenter.onLaunchTrackingClicked()
                     true
                 }
                 R.id.about -> {
-                    upcomingLaunchesPresenter.openAbout()
+                    upcomingLaunchesPresenter.onAboutClicked()
                     true
                 }
                 else -> {
@@ -57,6 +58,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     override fun onStart() {
         super.onStart()
         upcomingLaunchesPresenter.attachScreen(this)
+        upcomingLaunchesPresenter.onLoad()
     }
 
     override fun onStop() {
@@ -85,7 +87,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         TODO("Not yet implemented")
     }
 
-    override fun goToLaunchTrackingScreen(id: String?) {
+    override fun openLaunchTrackingScreen(id: String?) {
         val intent = Intent(this, LaunchTrackingActivity::class.java)
         if (id != null) {
             intent.putExtra(LaunchTrackingActivity.KEY_LAUNCH_ID, id)
@@ -95,7 +97,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         startActivity(intent)
     }
 
-    override fun goToAboutScreen() {
+    override fun openAboutScreen() {
         val intent = Intent(this, AboutActivity::class.java)
         startActivity(intent)
     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/launch_tracking"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="Launch Tracking" />
+        <item
+            android:id="@+id/upcoming_launches"
+            android:icon="@drawable/ic_baseline_event_24"
+            android:title="Upcoming Launches" />
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="About" />
+    </group>
+</menu>

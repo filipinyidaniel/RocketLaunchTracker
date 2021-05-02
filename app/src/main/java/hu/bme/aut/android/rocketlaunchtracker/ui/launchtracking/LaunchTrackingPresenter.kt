@@ -13,7 +13,7 @@ class LaunchTrackingPresenter @Inject constructor(
     fun loadLaunchDetails(id: String?) {
         executor.execute {
             if (id != null) {
-                launchDetailsInteractor.getLaunchDetails(id)
+                //launchDetailsInteractor.getLaunchDetails(id)
             }
         }
     }

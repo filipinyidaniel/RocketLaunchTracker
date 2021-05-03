@@ -120,31 +120,21 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     }
 
     override fun showFollowButton() {
-        TODO("Not yet implemented")
     }
 
     override fun hideFollowButton() {
-        TODO("Not yet implemented")
     }
 
     override fun showUnfollowButton() {
-        TODO("Not yet implemented")
     }
 
     override fun hideUnfollowButton() {
-        TODO("Not yet implemented")
     }
 
     override fun showNoTracking() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showInfoMessage(message: String) {
-        TODO("Not yet implemented")
     }
 
     override fun showErrorMessage(message: String) {
-        TODO("Not yet implemented")
     }
 
     override fun openURL(url: String) {

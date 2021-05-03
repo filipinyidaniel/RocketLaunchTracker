@@ -1,57 +1,38 @@
 package hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking
 
+import hu.bme.aut.android.rocketlaunchtracker.events.GetLaunchDetailsEvent
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.ui.Presenter
-import java.util.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
 class LaunchTrackingPresenter @Inject constructor(
     private val executor: Executor,
     private val launchDetailsInteractor: LaunchDetailsInteractor
-) : Presenter<LaunchTrackingScreen?>() {
+) : Presenter<LaunchTrackingScreen>() {
 
     private var launchDetails: LaunchDetails? = null
 
+    override fun attachScreen(screen: LaunchTrackingScreen) {
+        super.attachScreen(screen)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun detachScreen() {
+        EventBus.getDefault().unregister(this)
+        super.detachScreen()
+    }
+
     fun onLoad(id: String?) {
         executor.execute {
-            if (id != null) {
-                //launchDetailsInteractor.getLaunchDetails(id)
-            }
+            launchDetailsInteractor.getLaunchDetails(id)
         }
 
-        launchDetails = LaunchDetails(
-            "gaejagjkeéjklaegéjkl",
-            "Falcon 9 Block 5",
-            "Space X",
-            "Starlink 21",
-            "A batch of 60 satellites for Starlink mega-constellation - SpaceX's project for space-based Internet communication system.",
-            Date(),
-            "Kennedy Space Center, FL, USA",
-            "SUCCESS",
-            "https://google.com",
-            ""
-        )
 
-        if (launchDetails != null) {
-            var details = launchDetails as LaunchDetails
-            screen?.showLaunchDetails(details)
-            if (details.infoURL.isNullOrEmpty()) {
-                screen?.disableWebsiteButton()
-            } else {
-                screen?.enableWebsiteButton()
-            }
-            if (details.videoURL.isNullOrEmpty()) {
-                screen?.disableVideoButton()
-            } else {
-                screen?.enableVideoButton()
-            }
-        } else {
-            screen?.showNoTracking()
-            screen?.hideFollowButton()
-            screen?.hideUnfollowButton()
-        }
     }
 
     fun onFollowClicked() {
@@ -82,5 +63,37 @@ class LaunchTrackingPresenter @Inject constructor(
 
     fun onAboutClicked() {
         screen?.openAboutScreen()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: GetLaunchDetailsEvent) {
+        if (event.throwable != null) {
+            event.throwable?.printStackTrace()
+            screen?.showErrorMessage(event.throwable?.message.orEmpty())
+        } else if (event.launchDetails != null) {
+            launchDetails = event.launchDetails
+            screen?.showLaunchDetails(event.launchDetails)
+            if (event.launchDetails.infoURL.isNullOrEmpty()) {
+                screen?.disableWebsiteButton()
+            } else {
+                screen?.enableWebsiteButton()
+            }
+            if (event.launchDetails.videoURL.isNullOrEmpty()) {
+                screen?.disableVideoButton()
+            } else {
+                screen?.enableVideoButton()
+            }
+            if (event.isFollowed) {
+                screen?.hideFollowButton()
+                screen?.showUnfollowButton()
+            } else {
+                screen?.showFollowButton()
+                screen?.hideUnfollowButton()
+            }
+        } else {
+            screen?.showNoTracking()
+            screen?.hideFollowButton()
+            screen?.hideUnfollowButton()
+        }
     }
 }

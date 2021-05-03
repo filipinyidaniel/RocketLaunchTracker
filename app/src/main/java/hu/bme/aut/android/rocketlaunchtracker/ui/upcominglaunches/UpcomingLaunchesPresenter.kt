@@ -7,7 +7,6 @@ import hu.bme.aut.android.rocketlaunchtracker.ui.Presenter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 import java.util.concurrent.Executor
 import javax.inject.Inject
 

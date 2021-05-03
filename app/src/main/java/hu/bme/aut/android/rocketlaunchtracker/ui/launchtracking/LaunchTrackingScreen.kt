@@ -13,7 +13,6 @@ interface LaunchTrackingScreen {
     fun showUnfollowButton()
     fun hideUnfollowButton()
     fun showNoTracking()
-    fun showInfoMessage(message: String)
     fun showErrorMessage(message: String)
     fun openURL(url: String)
     fun openUpcomingLaunchesScreen()

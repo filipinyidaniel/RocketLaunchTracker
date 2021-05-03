@@ -18,20 +18,21 @@ class LaunchesInteractor @Inject constructor(private var launchApi: LaunchApi) {
             if (response.code() != 200) {
                 throw Exception("Result code is not 200")
             }
+            if (body == null) {
+                throw Exception("Could not parse response")
+            }
 
             var result = mutableListOf<Launch>()
-            if (body != null) {
-                for (launchSerializerCommon in body.results) {
-                    var launch = Launch(
-                        launchSerializerCommon.id.toString(),
-                        launchSerializerCommon.rocket?.configuration?.full_name.orEmpty(),
-                        launchSerializerCommon.launch_service_provider?.name.orEmpty(),
-                        launchSerializerCommon.mission?.name.orEmpty(),
-                        launchSerializerCommon.net,
-                        launchSerializerCommon.status?.name.orEmpty()
-                    )
-                    result.add(launch)
-                }
+            for (launchSerializerCommon in body.results) {
+                var launch = Launch(
+                    launchSerializerCommon.id.toString(),
+                    launchSerializerCommon.rocket?.configuration?.full_name.orEmpty(),
+                    launchSerializerCommon.launch_service_provider?.name.orEmpty(),
+                    launchSerializerCommon.mission?.name.orEmpty(),
+                    launchSerializerCommon.net,
+                    launchSerializerCommon.status?.name.orEmpty()
+                )
+                result.add(launch)
             }
 
             EventBus.getDefault().post(GetLaunchesEvent(result, null))

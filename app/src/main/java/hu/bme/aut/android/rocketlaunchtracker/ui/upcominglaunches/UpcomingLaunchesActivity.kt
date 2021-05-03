@@ -10,10 +10,16 @@ import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.model.Launch
 import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutActivity
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingActivity
-import kotlinx.android.synthetic.main.activity_launch_tracking.*
+import kotlinx.android.synthetic.main.activity_launch_tracking.navigationDrawer
+import kotlinx.android.synthetic.main.activity_launch_tracking.navigationView
+import kotlinx.android.synthetic.main.activity_launch_tracking.toolbar
+import kotlinx.android.synthetic.main.activity_upcoming_launches.*
 import javax.inject.Inject
 
 class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
+
+    private val displayedLaunches: MutableList<Launch> = mutableListOf()
+    private var launchAdapter: LaunchAdapter? = null
 
     @Inject
     lateinit var upcomingLaunchesPresenter: UpcomingLaunchesPresenter
@@ -23,6 +29,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         setContentView(R.layout.activity_upcoming_launches)
         setupNavigationMenu()
         (application as RocketLaunchTrackerApplication).injector.inject(this)
+        setupList()
     }
 
     private fun setupNavigationMenu() {
@@ -55,6 +62,11 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         }
     }
 
+    private fun setupList() {
+        launchAdapter = LaunchAdapter(this, upcomingLaunchesPresenter, displayedLaunches)
+        listLaunches.adapter = launchAdapter
+    }
+
     override fun onStart() {
         super.onStart()
         upcomingLaunchesPresenter.attachScreen(this)
@@ -80,7 +92,11 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun showLaunches(launches: List<Launch>) {
-        TODO("Not yet implemented")
+        displayedLaunches.clear()
+        if (launches != null) {
+            displayedLaunches.addAll(launches)
+        }
+        launchAdapter?.notifyDataSetChanged()
     }
 
     override fun showErrorMessage(message: String) {

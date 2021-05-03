@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.launchtracking.LaunchTrackingActivity">
+    <item
+        android:id="@+id/action_follow"
+        android:icon="@drawable/ic_baseline_star_border_24"
+        android:orderInCategory="100"
+        android:title="Follow"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_unfollow"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:orderInCategory="101"
+        android:title="Unfollow"
+        app:showAsAction="always" />
+</menu>

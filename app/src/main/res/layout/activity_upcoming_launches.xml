@@ -23,6 +23,21 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/title_upcoming_launches" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/brown_200"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listLaunches"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

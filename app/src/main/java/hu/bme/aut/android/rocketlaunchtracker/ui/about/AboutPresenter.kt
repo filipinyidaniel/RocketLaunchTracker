@@ -9,6 +9,9 @@ class AboutPresenter @Inject constructor(
 ) : Presenter<AboutScreen?>() {
 
     fun onLoad() {
+        var appVersion = "Rocket Launch Tracker v1.0.0"
+        var copyright = "Copyright © 2021 Daniel Filipinyi"
+        screen?.showAppInfo(appVersion, copyright)
     }
 
     fun onLaunchTrackingClicked() {

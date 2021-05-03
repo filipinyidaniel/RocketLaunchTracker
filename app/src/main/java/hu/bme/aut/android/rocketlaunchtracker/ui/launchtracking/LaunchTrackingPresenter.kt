@@ -12,6 +12,8 @@ class LaunchTrackingPresenter @Inject constructor(
     private val launchDetailsInteractor: LaunchDetailsInteractor
 ) : Presenter<LaunchTrackingScreen?>() {
 
+    private var launchDetails: LaunchDetails? = null
+
     fun onLoad(id: String?) {
         executor.execute {
             if (id != null) {
@@ -19,7 +21,7 @@ class LaunchTrackingPresenter @Inject constructor(
             }
         }
 
-        val launchDetails = LaunchDetails(
+        launchDetails = LaunchDetails(
             "gaejagjkeéjklaegéjkl",
             "Falcon 9 Block 5",
             "Space X",
@@ -33,13 +35,14 @@ class LaunchTrackingPresenter @Inject constructor(
         )
 
         if (launchDetails != null) {
-            screen?.showLaunchDetails(launchDetails)
-            if (launchDetails.infoURL.isNullOrEmpty()) {
+            var details = launchDetails as LaunchDetails
+            screen?.showLaunchDetails(details)
+            if (details.infoURL.isNullOrEmpty()) {
                 screen?.disableWebsiteButton()
             } else {
                 screen?.enableWebsiteButton()
             }
-            if (launchDetails.videoURL.isNullOrEmpty()) {
+            if (details.videoURL.isNullOrEmpty()) {
                 screen?.disableVideoButton()
             } else {
                 screen?.enableVideoButton()
@@ -60,11 +63,17 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     fun onWebsiteClicked() {
-        TODO("Not yet implemented")
+        var url = launchDetails?.infoURL
+        if (!url.isNullOrEmpty()) {
+            screen?.openURL(url)
+        }
     }
 
     fun onVideoClicked() {
-        TODO("Not yet implemented")
+        var url = launchDetails?.infoURL
+        if (!url.isNullOrEmpty()) {
+            screen?.openURL(url)
+        }
     }
 
     fun onUpcomingLaunchesClicked() {

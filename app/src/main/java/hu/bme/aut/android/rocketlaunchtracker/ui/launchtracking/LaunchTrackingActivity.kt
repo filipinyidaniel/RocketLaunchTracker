@@ -1,6 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,12 +23,13 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     @Inject
     lateinit var launchTrackingPresenter: LaunchTrackingPresenter
 
-    private val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm")
+    private val dateFormat = SimpleDateFormat("MM/dd/yyyy h:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch_tracking)
         setupNavigationMenu()
+        setupButtons()
         (application as RocketLaunchTrackerApplication).injector.inject(this)
     }
 
@@ -59,6 +61,11 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
                 }
             }
         }
+    }
+
+    private fun setupButtons() {
+        btnWebsite.setOnClickListener { launchTrackingPresenter.onWebsiteClicked() }
+        btnVideo.setOnClickListener { launchTrackingPresenter.onVideoClicked() }
     }
 
     override fun onStart() {
@@ -141,7 +148,8 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     }
 
     override fun openURL(url: String) {
-        TODO("Not yet implemented")
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     override fun openUpcomingLaunchesScreen() {

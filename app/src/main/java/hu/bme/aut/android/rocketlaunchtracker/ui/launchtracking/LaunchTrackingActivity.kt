@@ -11,6 +11,7 @@ import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutActivity
 import hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches.UpcomingLaunchesActivity
 import kotlinx.android.synthetic.main.activity_launch_tracking.*
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
@@ -20,6 +21,8 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
 
     @Inject
     lateinit var launchTrackingPresenter: LaunchTrackingPresenter
+
+    private val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,23 +87,29 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     }
 
     override fun showLaunchDetails(details: LaunchDetails) {
-        TODO("Not yet implemented")
+        tvRocket.text = details.rocket
+        tvProvider.text = details.serviceProvider
+        tvMission.text = details.mission
+        tvMissionDescription.text = details.missionDescription
+        tvStatus.text = details.status
+        tvDateTime.text = if (details.palnnedDate == null) "SOON" else dateFormat.format(details.palnnedDate)
+        tvLocation.text = details.location
     }
 
     override fun enableWebsiteButton() {
-        TODO("Not yet implemented")
+        btnWebsite.isEnabled = true
     }
 
     override fun disableWebsiteButton() {
-        TODO("Not yet implemented")
+        btnWebsite.isEnabled = false
     }
 
     override fun enableVideoButton() {
-        TODO("Not yet implemented")
+        btnVideo.isEnabled = true
     }
 
     override fun disableVideoButton() {
-        TODO("Not yet implemented")
+        btnVideo.isEnabled = false
     }
 
     override fun showFollowButton() {

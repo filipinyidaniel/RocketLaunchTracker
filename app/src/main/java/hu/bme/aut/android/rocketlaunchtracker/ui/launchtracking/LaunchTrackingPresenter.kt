@@ -1,7 +1,9 @@
 package hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking
 
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
+import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.ui.Presenter
+import java.util.*
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
@@ -15,6 +17,37 @@ class LaunchTrackingPresenter @Inject constructor(
             if (id != null) {
                 //launchDetailsInteractor.getLaunchDetails(id)
             }
+        }
+
+        val launchDetails = LaunchDetails(
+            "gaejagjkeéjklaegéjkl",
+            "Falcon 9 Block 5",
+            "Space X",
+            "Starlink 21",
+            "A batch of 60 satellites for Starlink mega-constellation - SpaceX's project for space-based Internet communication system.",
+            Date(),
+            "Kennedy Space Center, FL, USA",
+            "SUCCESS",
+            "https://google.com",
+            ""
+        )
+
+        if (launchDetails != null) {
+            screen?.showLaunchDetails(launchDetails)
+            if (launchDetails.infoURL.isNullOrEmpty()) {
+                screen?.disableWebsiteButton()
+            } else {
+                screen?.enableWebsiteButton()
+            }
+            if (launchDetails.videoURL.isNullOrEmpty()) {
+                screen?.disableVideoButton()
+            } else {
+                screen?.enableVideoButton()
+            }
+        } else {
+            screen?.showNoTracking()
+            screen?.hideFollowButton()
+            screen?.hideUnfollowButton()
         }
     }
 

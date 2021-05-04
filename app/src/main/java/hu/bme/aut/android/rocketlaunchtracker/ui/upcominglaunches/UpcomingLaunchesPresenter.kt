@@ -49,7 +49,7 @@ class UpcomingLaunchesPresenter @Inject constructor(
             event.throwable?.printStackTrace()
             screen?.showErrorMessage(event.throwable?.message.orEmpty())
         } else if (event.launches != null) {
-            screen?.showLaunches(event.launches as MutableList<Launch>)
+            screen?.showLaunches(event.launches)
         }
     }
 }

@@ -9,6 +9,11 @@ import javax.inject.Inject
 
 class LaunchesInteractor @Inject constructor(private var launchApi: LaunchApi) {
     fun getUpcomingLaunches() {
+        val event = executeGetUpcomingLaunches()
+        EventBus.getDefault().post(event)
+    }
+
+    fun executeGetUpcomingLaunches() : GetLaunchesEvent {
         try {
             var launchListCall = launchApi.getUpcomingLaunches(null, null, null)
 
@@ -35,9 +40,9 @@ class LaunchesInteractor @Inject constructor(private var launchApi: LaunchApi) {
                 result.add(launch)
             }
 
-            EventBus.getDefault().post(GetLaunchesEvent(result, null))
+            return GetLaunchesEvent(result)
         } catch (e: Exception) {
-            EventBus.getDefault().post(GetLaunchesEvent(null, e))
+            return GetLaunchesEvent(null, e)
         }
     }
 }

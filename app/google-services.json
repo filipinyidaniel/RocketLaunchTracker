@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "763339461908",
+    "project_id": "rocketlaunchtracker-e0208",
+    "storage_bucket": "rocketlaunchtracker-e0208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763339461908:android:ce961ed639012270eade01",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.android.rocketlaunchtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763339461908-nuk6sf72b8i7pt2qfvh7ofqbsnb563vi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOOLObGrv-0TVVRMrXh5EEzmQdz5fmYMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763339461908-nuk6sf72b8i7pt2qfvh7ofqbsnb563vi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

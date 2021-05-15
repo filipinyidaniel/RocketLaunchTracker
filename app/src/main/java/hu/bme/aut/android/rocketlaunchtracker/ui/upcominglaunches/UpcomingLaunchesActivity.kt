@@ -103,6 +103,8 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun showProgressBar() {
+        listLaunches.visibility = View.GONE
+        tvError.visibility = View.GONE
         progressBar.progress = 0
         progressBar.visibility = View.VISIBLE
     }

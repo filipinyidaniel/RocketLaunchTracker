@@ -102,6 +102,15 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         launchAdapter?.notifyDataSetChanged()
     }
 
+    override fun showProgressBar() {
+        progressBar.progress = 0
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
+
     override fun showErrorMessage(message: String) {
         listLaunches.visibility = View.GONE
         tvError.visibility = View.VISIBLE

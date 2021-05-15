@@ -26,6 +26,7 @@ class UpcomingLaunchesPresenter @Inject constructor(
     }
 
     fun onLoad() {
+        screen?.showProgressBar()
         executor.execute {
             launchesInteractor.getUpcomingLaunches()
         }
@@ -45,6 +46,7 @@ class UpcomingLaunchesPresenter @Inject constructor(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetLaunchesEvent) {
+        screen?.hideProgressBar()
         if (event.throwable != null) {
             event.throwable.printStackTrace()
             screen?.showErrorMessage("Could not load upcoming launches!")

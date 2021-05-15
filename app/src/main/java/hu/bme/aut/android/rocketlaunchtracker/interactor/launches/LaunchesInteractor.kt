@@ -35,7 +35,7 @@ class LaunchesInteractor @Inject constructor(private var launchApi: LaunchApi) {
                     launchSerializerCommon.launch_service_provider?.name.orEmpty(),
                     launchSerializerCommon.mission?.name.orEmpty(),
                     launchSerializerCommon.net,
-                    launchSerializerCommon.status?.name.orEmpty()
+                    launchSerializerCommon.status?.name.orEmpty().toUpperCase()
                 )
                 result.add(launch)
             }

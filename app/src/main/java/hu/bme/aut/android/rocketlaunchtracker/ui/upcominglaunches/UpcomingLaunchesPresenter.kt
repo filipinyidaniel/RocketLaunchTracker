@@ -46,8 +46,8 @@ class UpcomingLaunchesPresenter @Inject constructor(
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetLaunchesEvent) {
         if (event.throwable != null) {
-            event.throwable?.printStackTrace()
-            screen?.showErrorMessage(event.throwable?.message.orEmpty())
+            event.throwable.printStackTrace()
+            screen?.showErrorMessage("Could not load upcoming launches!")
         } else if (event.launches != null) {
             screen?.showLaunches(event.launches)
         }

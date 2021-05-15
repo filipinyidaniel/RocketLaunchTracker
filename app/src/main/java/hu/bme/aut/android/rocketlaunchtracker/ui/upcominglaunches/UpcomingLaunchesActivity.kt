@@ -3,6 +3,7 @@ package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import hu.bme.aut.android.rocketlaunchtracker.R
@@ -92,6 +93,8 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun showLaunches(launches: List<Launch>) {
+        tvError.visibility = View.GONE
+        listLaunches.visibility = View.VISIBLE
         displayedLaunches.clear()
         if (launches != null) {
             displayedLaunches.addAll(launches)
@@ -100,7 +103,9 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun showErrorMessage(message: String) {
-        TODO("Not yet implemented")
+        listLaunches.visibility = View.GONE
+        tvError.visibility = View.VISIBLE
+        tvError.text = message
     }
 
     override fun openLaunchTrackingScreen(id: String?) {

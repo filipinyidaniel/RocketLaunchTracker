@@ -28,12 +28,14 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming_launches)
-        setupNavigationMenu()
+        setupToolbar()
         (application as RocketLaunchTrackerApplication).injector.inject(this)
         setupList()
     }
 
-    private fun setupNavigationMenu() {
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+
         val toggle = ActionBarDrawerToggle(
             this,
             navigationDrawer,

@@ -4,14 +4,14 @@
         <item
             android:id="@+id/launch_tracking"
             android:icon="@drawable/ic_baseline_star_24"
-            android:title="Launch Tracking" />
+            android:title="@string/launch_tracking" />
         <item
             android:id="@+id/upcoming_launches"
             android:icon="@drawable/ic_baseline_event_24"
-            android:title="Upcoming Launches" />
+            android:title="@string/upcoming_launches" />
         <item
             android:id="@+id/about"
             android:icon="@drawable/ic_baseline_info_24"
-            android:title="About" />
+            android:title="@string/about" />
     </group>
 </menu>

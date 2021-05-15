@@ -21,7 +21,7 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/title_launch_tracking" />
+            app:title="@string/launch_tracking" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="0dp"
-                    android:text="Rocket:"
+                    android:text="@string/label_rocket"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="0dp"
-                    android:text="Launch Service Provider:"
+                    android:text="@string/label_launch_service_provider"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="0dp"
-                    android:text="Mission:"
+                    android:text="@string/label_mission"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -148,7 +148,7 @@
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="3dp"
                         android:layout_weight="1"
-                        android:text="WEBSITE"
+                        android:text="@string/website"
                         android:textSize="12sp" />
 
                     <Button
@@ -158,7 +158,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
-                        android:text="WATCH"
+                        android:text="@string/watch"
                         android:textSize="12sp" />
 
                 </LinearLayout>

@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">Rocket Launch Tracker</string>
-    <string name="title_launch_tracking">Launch Tracking</string>
-    <string name="title_upcoming_launches">Upcoming Launches</string>
-    <string name="title_about">About</string>
+    <string name="launch_tracking">Launch Tracking</string>
+    <string name="upcoming_launches">Upcoming Launches</string>
+    <string name="about">About</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="label_rocket">Rocket:</string>
+    <string name="label_launch_service_provider">Launch Service Provider:</string>
+    <string name="label_mission">Mission:</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="watch">WATCH</string>
+    <string name="website">WEBSITE</string>
 </resources>

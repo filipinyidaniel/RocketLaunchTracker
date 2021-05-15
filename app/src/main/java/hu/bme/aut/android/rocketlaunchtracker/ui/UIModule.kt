@@ -3,10 +3,8 @@ package hu.bme.aut.android.rocketlaunchtracker.ui
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import hu.bme.aut.android.rocketlaunchtracker.interactor.about.AboutInteractor
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launches.LaunchesInteractor
-import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutPresenter
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingPresenter
 import hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches.UpcomingLaunchesPresenter
 import java.util.concurrent.Executor
@@ -22,12 +20,6 @@ class UIModule(private val context: Context) {
     @Provides
     @Singleton
     fun networkExecutor(): Executor = Executors.newFixedThreadPool(1)
-
-    @Provides
-    @Singleton
-    fun aboutPresenter(
-        aboutInteractor: AboutInteractor
-    ) = AboutPresenter(aboutInteractor)
 
     @Provides
     @Singleton

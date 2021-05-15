@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import hu.bme.aut.android.rocketlaunchtracker.BuildConfig
 import hu.bme.aut.android.rocketlaunchtracker.R
 import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingActivity
@@ -82,9 +83,9 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
         }
     }
 
-    override fun showAppInfo(appVersion: String, copyright: String) {
-        tvAppInfo.text = appVersion
-        tvCopyright.text = copyright
+    override fun showAppInfo() {
+        tvAppInfo.text = "${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME}"
+        tvCopyright.text = "Copyright © 2021 Daniel Filipinyi"
     }
 
     override fun openLaunchTrackingScreen() {

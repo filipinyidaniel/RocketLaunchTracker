@@ -28,11 +28,10 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     fun onLoad(id: String?) {
+        screen?.showProgressBar()
         executor.execute {
             launchDetailsInteractor.getLaunchDetails(id)
         }
-
-
     }
 
     fun onFollowClicked() {
@@ -67,22 +66,13 @@ class LaunchTrackingPresenter @Inject constructor(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetLaunchDetailsEvent) {
+        screen?.hideProgressBar()
         if (event.throwable != null) {
-            event.throwable?.printStackTrace()
-            screen?.showErrorMessage(event.throwable?.message.orEmpty())
+            event.throwable.printStackTrace()
+            screen?.showMessage("Could not load launch details!")
         } else if (event.launchDetails != null) {
             launchDetails = event.launchDetails
             screen?.showLaunchDetails(event.launchDetails)
-            if (event.launchDetails.infoURL.isNullOrEmpty()) {
-                screen?.disableWebsiteButton()
-            } else {
-                screen?.enableWebsiteButton()
-            }
-            if (event.launchDetails.videoURL.isNullOrEmpty()) {
-                screen?.disableVideoButton()
-            } else {
-                screen?.enableVideoButton()
-            }
             if (event.isFollowed) {
                 screen?.hideFollowButton()
                 screen?.showUnfollowButton()
@@ -91,9 +81,9 @@ class LaunchTrackingPresenter @Inject constructor(
                 screen?.hideUnfollowButton()
             }
         } else {
-            screen?.showNoTracking()
             screen?.hideFollowButton()
             screen?.hideUnfollowButton()
+            screen?.showMessage("No followed launches!")
         }
     }
 }

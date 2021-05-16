@@ -11,9 +11,6 @@ import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingActivity
 import hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches.UpcomingLaunchesActivity
 import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.activity_launch_tracking.navigationDrawer
-import kotlinx.android.synthetic.main.activity_launch_tracking.navigationView
-import kotlinx.android.synthetic.main.activity_launch_tracking.toolbar
 import javax.inject.Inject
 
 class AboutActivity : AppCompatActivity(), AboutScreen {
@@ -29,8 +26,6 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-
         val toggle = ActionBarDrawerToggle(
             this,
             navigationDrawer,

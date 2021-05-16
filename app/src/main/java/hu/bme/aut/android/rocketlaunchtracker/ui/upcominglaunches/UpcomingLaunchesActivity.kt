@@ -11,9 +11,6 @@ import hu.bme.aut.android.rocketlaunchtracker.RocketLaunchTrackerApplication
 import hu.bme.aut.android.rocketlaunchtracker.model.Launch
 import hu.bme.aut.android.rocketlaunchtracker.ui.about.AboutActivity
 import hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking.LaunchTrackingActivity
-import kotlinx.android.synthetic.main.activity_launch_tracking.navigationDrawer
-import kotlinx.android.synthetic.main.activity_launch_tracking.navigationView
-import kotlinx.android.synthetic.main.activity_launch_tracking.toolbar
 import kotlinx.android.synthetic.main.activity_upcoming_launches.*
 import javax.inject.Inject
 
@@ -34,8 +31,6 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-
         val toggle = ActionBarDrawerToggle(
             this,
             navigationDrawer,
@@ -95,7 +90,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
     }
 
     override fun showLaunches(launches: List<Launch>) {
-        tvError.visibility = View.GONE
+        tvMessage.visibility = View.GONE
         listLaunches.visibility = View.VISIBLE
         displayedLaunches.clear()
         if (launches != null) {
@@ -106,7 +101,7 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
 
     override fun showProgressBar() {
         listLaunches.visibility = View.GONE
-        tvError.visibility = View.GONE
+        tvMessage.visibility = View.GONE
         progressBar.progress = 0
         progressBar.visibility = View.VISIBLE
     }
@@ -115,10 +110,10 @@ class UpcomingLaunchesActivity : AppCompatActivity(), UpcomingLaunchesScreen {
         progressBar.visibility = View.GONE
     }
 
-    override fun showErrorMessage(message: String) {
+    override fun showMessage(message: String) {
         listLaunches.visibility = View.GONE
-        tvError.visibility = View.VISIBLE
-        tvError.text = message
+        tvMessage.visibility = View.VISIBLE
+        tvMessage.text = message
     }
 
     override fun openLaunchTrackingScreen(id: String?) {

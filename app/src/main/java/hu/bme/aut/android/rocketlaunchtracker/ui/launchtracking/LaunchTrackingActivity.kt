@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -27,8 +28,8 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
 
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy h:mm")
 
-    private var menuFollow: MenuItem? = null
-    private var menuUnfollow: MenuItem? = null
+    private lateinit var menuFollow: MenuItem
+    private lateinit var menuUnfollow: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,17 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
+        menuInflater.inflate(R.menu.menu_launch_tracking, toolbar.menu)
+        menuFollow = toolbar.menu.findItem(R.id.action_follow)
+        menuFollow.setOnMenuItemClickListener {
+            launchTrackingPresenter.onFollowClicked()
+            true
+        }
+        menuUnfollow = toolbar.menu.findItem(R.id.action_unfollow)
+        menuUnfollow.setOnMenuItemClickListener {
+            launchTrackingPresenter.onUnfollowClicked()
+            true
+        }
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -75,30 +86,6 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
         btnVideo.setOnClickListener { launchTrackingPresenter.onVideoClicked() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.menu_launch_tracking, menu)
-        menuFollow = menu?.findItem(R.id.action_follow)
-        menuUnfollow = menu?.findItem(R.id.action_unfollow)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_follow -> {
-                launchTrackingPresenter.onFollowClicked()
-                true
-            }
-            R.id.action_unfollow -> {
-                launchTrackingPresenter.onUnfollowClicked()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         launchTrackingPresenter.attachScreen(this)
@@ -125,6 +112,9 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
     }
 
     override fun showLaunchDetails(details: LaunchDetails) {
+        tvMessage.visibility = View.GONE
+        layoutDetails.visibility = View.VISIBLE
+        layoutTracker.visibility = View.VISIBLE
         tvRocket.text = details.rocket
         tvProvider.text = details.serviceProvider
         tvMission.text = details.mission
@@ -132,44 +122,43 @@ class LaunchTrackingActivity : AppCompatActivity(), LaunchTrackingScreen {
         tvStatus.text = details.status
         tvDateTime.text = if (details.palnnedDate == null) "SOON" else dateFormat.format(details.palnnedDate)
         tvLocation.text = details.location
-    }
-
-    override fun enableWebsiteButton() {
-        btnWebsite.isEnabled = true
-    }
-
-    override fun disableWebsiteButton() {
-        btnWebsite.isEnabled = false
-    }
-
-    override fun enableVideoButton() {
-        btnVideo.isEnabled = true
-    }
-
-    override fun disableVideoButton() {
-        btnVideo.isEnabled = false
+        btnWebsite.isEnabled = !details.infoURL.isNullOrEmpty()
+        btnVideo.isEnabled = !details.videoURL.isNullOrEmpty()
     }
 
     override fun showFollowButton() {
-        menuFollow!!.isVisible = true
+        menuFollow.isVisible = true
     }
 
     override fun hideFollowButton() {
-        menuFollow!!.isVisible = false
+        menuFollow.isVisible = false
     }
 
     override fun showUnfollowButton() {
-        menuUnfollow!!.isVisible = true
+        menuUnfollow.isVisible = true
     }
 
     override fun hideUnfollowButton() {
-        menuUnfollow!!.isVisible = false
+        menuUnfollow.isVisible = false
     }
 
-    override fun showNoTracking() {
+    override fun showProgressBar() {
+        layoutDetails.visibility = View.GONE
+        layoutTracker.visibility = View.GONE
+        tvMessage.visibility = View.GONE
+        progressBar.progress = 0
+        progressBar.visibility = View.VISIBLE
     }
 
-    override fun showErrorMessage(message: String) {
+    override fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
+
+    override fun showMessage(message: String) {
+        layoutDetails.visibility = View.GONE
+        layoutTracker.visibility = View.GONE
+        tvMessage.visibility = View.VISIBLE
+        tvMessage.text = message
     }
 
     override fun openURL(url: String) {

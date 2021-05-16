@@ -2,7 +2,6 @@ package hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches
 
 import hu.bme.aut.android.rocketlaunchtracker.events.GetLaunchesEvent
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launches.LaunchesInteractor
-import hu.bme.aut.android.rocketlaunchtracker.model.Launch
 import hu.bme.aut.android.rocketlaunchtracker.ui.Presenter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -49,7 +48,7 @@ class UpcomingLaunchesPresenter @Inject constructor(
         screen?.hideProgressBar()
         if (event.throwable != null) {
             event.throwable.printStackTrace()
-            screen?.showErrorMessage("Could not load upcoming launches!")
+            screen?.showMessage("Could not load upcoming launches!")
         } else if (event.launches != null) {
             screen?.showLaunches(event.launches)
         }

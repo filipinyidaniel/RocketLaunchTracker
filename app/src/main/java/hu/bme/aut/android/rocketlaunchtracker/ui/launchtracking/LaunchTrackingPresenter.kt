@@ -61,7 +61,7 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     fun onVideoClicked() {
-        var url = launchDetails?.infoURL
+        var url = launchDetails?.videoURL
         if (!url.isNullOrEmpty()) {
             screen?.openURL(url)
         }

@@ -2,6 +2,7 @@ package hu.bme.aut.android.rocketlaunchtracker.interactor
 
 import dagger.Module
 import dagger.Provides
+import hu.bme.aut.android.rocketlaunchtracker.database.LaunchDetailsDAO
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launches.LaunchesInteractor
 import hu.bme.aut.android.rocketlaunchtracker.network.apis.LaunchApi
@@ -13,8 +14,9 @@ class InteractorModule {
     @Provides
     @Singleton
     fun provideLaunchDetailsInteractor(
-        launchApi: LaunchApi
-    ) = LaunchDetailsInteractor(launchApi)
+        launchApi: LaunchApi,
+        launchDetailsDAO: LaunchDetailsDAO
+    ) = LaunchDetailsInteractor(launchApi, launchDetailsDAO)
 
     @Provides
     @Singleton

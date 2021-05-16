@@ -1,19 +1,23 @@
 package hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails
 
 import android.util.Log
+import hu.bme.aut.android.rocketlaunchtracker.database.LaunchDetailsDAO
 import hu.bme.aut.android.rocketlaunchtracker.events.GetLaunchDetailsEvent
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.network.apis.LaunchApi
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
-class LaunchDetailsInteractor @Inject constructor(private var launchApi: LaunchApi) {
+class LaunchDetailsInteractor @Inject constructor(
+    private var launchApi: LaunchApi,
+    private var launchDetailsDAO: LaunchDetailsDAO
+) {
     fun getLaunchDetails(id: String?) {
         var event = executeGetLaunchDetails(id)
         EventBus.getDefault().post(event)
     }
 
-    private fun executeGetLaunchDetails(id: String?) : GetLaunchDetailsEvent {
+    private fun executeGetLaunchDetails(id: String?): GetLaunchDetailsEvent {
         try {
             var launchFromDB = getLaunchFromDB(id)
 

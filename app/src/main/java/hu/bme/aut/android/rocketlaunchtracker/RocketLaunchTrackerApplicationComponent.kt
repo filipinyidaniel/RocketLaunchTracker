@@ -1,6 +1,7 @@
 package hu.bme.aut.android.rocketlaunchtracker
 
 import dagger.Component
+import hu.bme.aut.android.rocketlaunchtracker.database.DatabaseModule
 import hu.bme.aut.android.rocketlaunchtracker.interactor.InteractorModule
 import hu.bme.aut.android.rocketlaunchtracker.network.NetworkModule
 import hu.bme.aut.android.rocketlaunchtracker.ui.UIModule
@@ -10,7 +11,7 @@ import hu.bme.aut.android.rocketlaunchtracker.ui.upcominglaunches.UpcomingLaunch
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [UIModule::class, NetworkModule::class, InteractorModule::class])
+@Component(modules = [UIModule::class, InteractorModule::class, NetworkModule::class, DatabaseModule::class])
 interface RocketLaunchTrackerApplicationComponent {
     fun inject(aboutActivity: AboutActivity)
     fun inject(launchTrackingActivity: LaunchTrackingActivity)

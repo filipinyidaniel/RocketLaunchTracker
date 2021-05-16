@@ -1,5 +1,6 @@
 package hu.bme.aut.android.rocketlaunchtracker.ui.launchtracking
 
+import hu.bme.aut.android.rocketlaunchtracker.events.FollowLaunchEvent
 import hu.bme.aut.android.rocketlaunchtracker.events.GetLaunchDetailsEvent
 import hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails.LaunchDetailsInteractor
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
@@ -35,11 +36,21 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     fun onFollowClicked() {
-        TODO("Not yet implemented")
+        var details = launchDetails
+        if (details != null) {
+            executor.execute {
+                launchDetailsInteractor.followLaunch(details)
+            }
+        }
     }
 
     fun onUnfollowClicked() {
-        TODO("Not yet implemented")
+        var details = launchDetails
+        if (details != null) {
+            executor.execute {
+                launchDetailsInteractor.unfollowLaunch(details)
+            }
+        }
     }
 
     fun onWebsiteClicked() {
@@ -65,7 +76,7 @@ class LaunchTrackingPresenter @Inject constructor(
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: GetLaunchDetailsEvent) {
+    fun onGetLaunchDetailsEvent(event: GetLaunchDetailsEvent) {
         screen?.hideProgressBar()
         if (event.throwable != null) {
             event.throwable.printStackTrace()
@@ -84,6 +95,22 @@ class LaunchTrackingPresenter @Inject constructor(
             screen?.hideFollowButton()
             screen?.hideUnfollowButton()
             screen?.showMessage("No followed launches!")
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onFollowLaunchEvent(event: FollowLaunchEvent) {
+        if (event.throwable != null) {
+            event.throwable.printStackTrace()
+            screen?.showMessage("Could not save to local database!")
+        } else {
+            if (event.isFollowed) {
+                screen?.hideFollowButton()
+                screen?.showUnfollowButton()
+            } else {
+                screen?.showFollowButton()
+                screen?.hideUnfollowButton()
+            }
         }
     }
 }

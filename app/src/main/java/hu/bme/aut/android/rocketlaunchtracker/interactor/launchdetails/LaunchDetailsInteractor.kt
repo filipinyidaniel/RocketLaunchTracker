@@ -2,6 +2,7 @@ package hu.bme.aut.android.rocketlaunchtracker.interactor.launchdetails
 
 import android.util.Log
 import hu.bme.aut.android.rocketlaunchtracker.database.LaunchDetailsDAO
+import hu.bme.aut.android.rocketlaunchtracker.events.FollowLaunchEvent
 import hu.bme.aut.android.rocketlaunchtracker.events.GetLaunchDetailsEvent
 import hu.bme.aut.android.rocketlaunchtracker.model.LaunchDetails
 import hu.bme.aut.android.rocketlaunchtracker.network.apis.LaunchApi
@@ -48,10 +49,16 @@ class LaunchDetailsInteractor @Inject constructor(
     }
 
     private fun getLaunchFromDB(id: String?): LaunchDetails? {
-        return null
+        var launches = launchDetailsDAO.getAllLaunches()
+        return if (id.isNullOrEmpty()) {
+            launches.firstOrNull()
+        } else {
+            launches.firstOrNull { launch -> launch.id == id }
+        }
     }
 
-    private fun saveLaunchToDB(launch: LaunchDetails) {
+    private fun saveLaunchToDB(details: LaunchDetails) {
+        launchDetailsDAO.updateLaunch(details)
     }
 
     private fun getLaunchFromWS(id: String): LaunchDetails? {
@@ -88,10 +95,32 @@ class LaunchDetailsInteractor @Inject constructor(
     }
 
     fun followLaunch(details: LaunchDetails) {
-        TODO("Not yet implemented")
+        var event = executeFollowLaunch(details)
+        EventBus.getDefault().post(event)
     }
 
-    fun unfollowLaunch(id: String) {
-        TODO("Not yet implemented")
+    private fun executeFollowLaunch(details: LaunchDetails): FollowLaunchEvent {
+        return try {
+            // only one launch can be followed (at the moment)
+            launchDetailsDAO.deleteAllLaunches()
+            launchDetailsDAO.insertLaunch(details)
+            FollowLaunchEvent(true)
+        } catch (e: Exception) {
+            FollowLaunchEvent(false, e)
+        }
+    }
+
+    fun unfollowLaunch(details: LaunchDetails) {
+        var event = executeUnfollowLaunch(details)
+        EventBus.getDefault().post(event)
+    }
+
+    private fun executeUnfollowLaunch(details: LaunchDetails): FollowLaunchEvent {
+        return try {
+            launchDetailsDAO.deleteLaunch(details)
+            FollowLaunchEvent(false)
+        } catch (e: Exception) {
+            FollowLaunchEvent(true, e)
+        }
     }
 }

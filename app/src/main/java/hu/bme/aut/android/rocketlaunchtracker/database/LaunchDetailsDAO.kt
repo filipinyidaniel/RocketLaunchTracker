@@ -16,4 +16,7 @@ interface LaunchDetailsDAO {
 
     @Delete
     fun deleteLaunch(launchDetails: LaunchDetails)
+
+    @Query("DELETE FROM launches")
+    fun deleteAllLaunches()
 }
